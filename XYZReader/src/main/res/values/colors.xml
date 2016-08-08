@@ -16,7 +16,7 @@
 -->
 
 <resources>
-    <color name="photo_placeholder">#ccc</color>
+    <color name="photo_placeholder">#CCC</color>
     <color name="ltgray">#ffe0e0e0</color>
 
     <color name="colorPrimary">#4CAF50</color>
@@ -25,6 +25,7 @@
     <color name="colorAccent">#795548</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
-    <color name="colorIcons">#FFFFFF</color>
-    <color name="colorDivider">#B6B6B6</color>
+    <color name="colorArticleBodyBg">#FFF</color>
+    <color name="colorArticleByLineBg">#333</color>
+    <color name="colorArticleByLineText">#8FFF</color>
 </resources>

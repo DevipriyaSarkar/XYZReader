@@ -20,9 +20,9 @@
             <FrameLayout
                 android:id="@+id/toolbar_container"
                 android:layout_width="match_parent"
-                android:layout_height="112dp"
+                android:layout_height="@dimen/toolbar_container_height"
                 android:background="?colorPrimary"
-                android:elevation="8dp">
+                android:elevation="@dimen/toolbar_container_elevation">
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -62,10 +62,10 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:scrollbarStyle="outsideOverlay"
-                    android:paddingTop="4dp"
+                    android:paddingTop="@dimen/list_top_padding"
                     android:paddingLeft="@dimen/list_side_margin"
                     android:paddingRight="@dimen/list_side_margin"
-                    android:paddingBottom="28dp" />
+                    android:paddingBottom="@dimen/list_bottom_padding" />
             </android.support.v4.widget.SwipeRefreshLayout>
 
         </FrameLayout>
