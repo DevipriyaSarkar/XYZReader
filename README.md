@@ -1,5 +1,6 @@
 # xyzreader
-This project is a part of the Android Developer Nanodegree.
+A mock RSS feed reader featuring banner photos and shocking headlines.  
+This project is a part of the Android Developer Nanodegree to implement changes that will improve the UI and make it conform to Material Design.
 
 ## Screenshots
 <img src="screenshots/screenshot1.png" width="360" alt="Main Reader Screen" >
