@@ -2,6 +2,7 @@ package com.example.xyzreader.ui;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -11,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.ShareCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
@@ -43,10 +45,10 @@ public class ArticleDetailFragment extends Fragment implements
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
+    private Context mContext;
 
     private ImageView mToolImage;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    private Toolbar toolBar;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -94,10 +96,11 @@ public class ArticleDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
+        mContext = container.getContext();
 
         mToolImage = (ImageView) mRootView.findViewById(R.id.toolImage);
         collapsingToolbarLayout = (CollapsingToolbarLayout) mRootView.findViewById(R.id.collapsing_toolbar);
-        toolBar = (Toolbar) mRootView.findViewById(R.id.toolbar);
+        Toolbar toolBar = (Toolbar) mRootView.findViewById(R.id.toolbar);
         getActivityCast().setSupportActionBar(toolBar);
         ActionBar actionBar = getActivityCast().getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -132,13 +135,12 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.animate().alpha(1);
             collapsingToolbarLayout.setTitle(mCursor.getString(ArticleLoader.Query.TITLE));
             bylineView.setText(Html.fromHtml(
-                    DateUtils.getRelativeTimeSpanString(
-                            mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by <font color='#ffffff'>"
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                            + "</font>"));
+                    String.format("%s by <font color='#ffffff'>%s</font>",
+                            DateUtils.getRelativeTimeSpanString(mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
+                                    System.currentTimeMillis(),
+                                    DateUtils.HOUR_IN_MILLIS,
+                                    DateUtils.FORMAT_ABBREV_ALL).toString(),
+                            mCursor.getString(ArticleLoader.Query.AUTHOR))));
             bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY)));
             Picasso.with(getActivity())
                     .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
@@ -152,8 +154,10 @@ public class ArticleDetailFragment extends Fragment implements
                                 Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                                     @Override
                                     public void onGenerated(Palette palette) {
-                                        collapsingToolbarLayout.setContentScrimColor(palette.getMutedColor(getResources().getColor(R.color.colorPrimary)));
-                                        collapsingToolbarLayout.setStatusBarScrimColor(palette.getMutedColor(getResources().getColor(R.color.colorPrimaryDark)));
+                                        collapsingToolbarLayout.setContentScrimColor(
+                                                palette.getMutedColor(ContextCompat.getColor(mContext, R.color.colorPrimary)));
+                                        collapsingToolbarLayout.setStatusBarScrimColor(
+                                                palette.getMutedColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark)));
                                     }
                                 });
                             }
